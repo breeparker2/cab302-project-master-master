@@ -1,0 +1,4 @@
+# Project exclude paths
+/cab302-project-master-master/cab302-project-master/.gradle/
+/cab302-project-master-master/cab302-project-master/build/
+/cab302-project-master-master/cab302-project-master/build/classes/java/main/

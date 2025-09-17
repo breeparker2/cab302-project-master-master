@@ -1,0 +1,15 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Environment-dependent path to Maven home directory
+/mavenHomeManager.xml
+=======
+# Editor-based HTTP Client requests
+/httpRequests/
+>>>>>>> 0e2d64a (hub)
+=======
+# Editor-based HTTP Client requests
+/httpRequests/
+>>>>>>> 0e2d64a6368530197f1cfe5b5f3c72ffe7850a0a
