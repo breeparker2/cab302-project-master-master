@@ -55,14 +55,13 @@ public class login_Controller {
             return;
         }
 
-        // Check by username only to avoid UNIQUE constraint errors
         if (dao.usernameExists(username)) {
             showAlert(Alert.AlertType.ERROR, "Account Creation Failed",
                     "That username is already taken.");
             return;
         }
 
-        // Use DAO to hash and insert
+
         boolean created = dao.register(username, password); // <-- raw password; DAO hashes it
         if (created) {
             showAlert(Alert.AlertType.INFORMATION, "Account Created",
