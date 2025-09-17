@@ -4,98 +4,83 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class login_Controller {
-    AccountDAO dao = new AccountDAO();
 
-    // Link to the fx:id fields in your FXML
-    @FXML
-    private TextField usernameField;
+    private final AccountDAO dao = new AccountDAO();
 
-    @FXML
-    private PasswordField passwordField;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private Button Return;
 
-    @FXML
-    private Button Return;
-
-    // Handle the Login button
     @FXML
     private void handleLogin() {
+        // sanity check: FXML wiring
+        if (usernameField == null || passwordField == null) {
+            showAlert(Alert.AlertType.ERROR, "Wiring Error",
+                    "usernameField or passwordField is null. Check fx:id/controller.");
+            return;
+        }
+
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (dao.ConfrimLogin(username, password)){
-            Account account = dao.getAccount(username, password);
-            showAlert(AlertType.INFORMATION, "Login Successful",
-                    "Welcome, " + account.getUsername() + "!");
-            /*
-            try{
-                Stage currentStage = (Stage) usernameField.getScene().getWindow();
-                new java.demo.start().java.demo.start(currentStage);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-
-             */
-
-
-
+        if (!dao.ConfrimLogin(username, password)) {
+            showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid username or password.");
+            return;
         }
-        else{
-            showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
+
+        try {
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            new start().start(stage); // go to Start page class
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Navigation Error",
+                    "Could not open the start menu.\n" + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
-    /*
-    @FXML
-    private void nextScreen(String fxmlFile, String title) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(java.demo.Main.class.getResource(fxmlFile));
-        Scene scene = new Scene(fxmlLoader.load(), java.demo.Main.WIDTH, java.demo.Main.HEIGHT);
-        Stage stage = (Stage) PLACEHOLDER.getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
-    }
-     */
-
 
     @FXML
-    private void handleNewAccount(){
+    private void handleNewAccount() {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        Account account = new Account(username, password);
-        // here is where new password gets hashed
-        if ((username == "") | (password == "")){
-            showAlert(AlertType.ERROR, "Account Creation Failed", "You need a valid username and password");
+
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+            showAlert(Alert.AlertType.ERROR, "Account Creation Failed",
+                    "You need a valid username and password.");
+            return;
         }
 
-        else if (dao.getAccount(username, password) == null) {
-            dao.CreateAccount(account);
-        }
-        else{
-            showAlert(AlertType.ERROR, "Account Creation Failed", "This Account Already Exists");
+        // Check by username only to avoid UNIQUE constraint errors
+        if (dao.usernameExists(username)) {
+            showAlert(Alert.AlertType.ERROR, "Account Creation Failed",
+                    "That username is already taken.");
+            return;
         }
 
+        // Use DAO to hash and insert
+        boolean created = dao.register(username, password); // <-- raw password; DAO hashes it
+        if (created) {
+            showAlert(Alert.AlertType.INFORMATION, "Account Created",
+                    "Your account has been created. You can now log in.");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Account Creation Failed",
+                    "Could not create the account. Please try a different username.");
+        }
     }
-    // Handle the Cancel button
+
     @FXML
-    private void handleReturn() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), LoginMain.WIDTH, LoginMain.HEIGHT);
+    private void handleReturn() {
         Stage stage = (Stage) Return.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        stage.close();
     }
 
-    // Utility method for alerts
-    private void showAlert(AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        var alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
