@@ -1,5 +1,7 @@
 package app.demo;
 
+import events.EventDef;
+
 import java.util.ArrayList;
 import java.util.List;
 

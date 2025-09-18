@@ -1,5 +1,7 @@
 package app.demo;
 
+import app.demo.data.Account;
+
 public interface LoginDetailsDAO {
     public void CreateAccount(Account account);
 

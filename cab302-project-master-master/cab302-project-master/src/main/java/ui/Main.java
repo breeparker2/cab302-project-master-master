@@ -1,4 +1,10 @@
-package app.demo;
+package ui;
+
+import app.demo.EventLibrary;
+import app.demo.Stock;
+import app.demo.StocksPanel;
+import core.Market;
+import events.EventEngine;
 
 import javax.swing.*;
 import java.awt.*;

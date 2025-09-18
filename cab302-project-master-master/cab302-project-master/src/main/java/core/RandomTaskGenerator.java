@@ -1,4 +1,8 @@
-package app.demo;
+package core;
+
+import events.EventEngine;
+import app.demo.Stock;
+import app.demo.Task;
 
 import java.util.*;
 

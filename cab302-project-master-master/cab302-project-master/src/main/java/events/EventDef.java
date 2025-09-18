@@ -1,4 +1,4 @@
-package app.demo;
+package events;
 
 // event predetermined structure for easy editing
 public final class EventDef {
@@ -17,7 +17,7 @@ public final class EventDef {
         this.durationMs = durationMs;
     }
 
-    // 👇 new convenience constructor
+    // new convenience constructor
     public EventDef(String title, String stockCode, double shiftPct, int durationMs) {
         this(title, "", stockCode, shiftPct, durationMs);
     }

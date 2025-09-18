@@ -1,5 +1,6 @@
-package app.demo;
+package ui;
 
+import app.demo.Settings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

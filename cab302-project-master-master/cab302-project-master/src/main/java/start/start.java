@@ -1,5 +1,6 @@
-package app.demo;// package java.demo.hub;
+package start;// package java.demo.hub;
 
+import app.demo.Settings;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -12,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import ui.SettingsMenu;
+import ui.hub;
 
 import java.net.URL;
 import java.util.Objects;
@@ -53,10 +56,6 @@ public class start extends Application {
                 System.out.println("Load Game clicked (TODO)")
         ));
 
-       // root.getChildren().add(makeHotspot(470, 450, 280, 47, "SETTINGS", () -> {
-         //   java.demo.SettingsMenu.show(primaryStage);
-           // applySettings(); // refresh brightness + volume
-        //}));
 
         root.getChildren().add(makeHotspot(557, 450, 124, 45, "EXIT", () -> {
             if (startMusic != null) startMusic.stop();
@@ -67,7 +66,7 @@ public class start extends Application {
         Scene scene = new Scene(root);
         scene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, e -> {
             if (e.getCode() == javafx.scene.input.KeyCode.SPACE) {
-                e.consume(); // ⛔ stop buttons from seeing SPACE
+                e.consume(); // stop buttons from seeing SPACE
                 SettingsMenu.show(primaryStage, this::applySettings);
             }
         });

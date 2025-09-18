@@ -1,4 +1,6 @@
-package app.demo;
+package core;
+
+import app.demo.Stock;
 
 import java.util.*;
 

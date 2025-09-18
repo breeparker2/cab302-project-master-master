@@ -1,5 +1,6 @@
 package app.demo;
 
+import events.MarketEvent;
 import javafx.application.Platform;
 
 public final class HubGateway {

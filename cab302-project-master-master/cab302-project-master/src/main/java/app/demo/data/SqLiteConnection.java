@@ -1,4 +1,4 @@
-package app.demo;
+package app.demo.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

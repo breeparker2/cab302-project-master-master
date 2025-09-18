@@ -1,4 +1,7 @@
-package app.demo;
+package app.demo.data;
+
+import app.demo.LoginDetailsDAO;
+import app.demo.passwordEncryption;
 
 import java.sql.*;
 

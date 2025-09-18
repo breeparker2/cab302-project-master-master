@@ -1,4 +1,6 @@
-package app.demo;
+package app.demo.data;
+
+import app.demo.passwordEncryption;
 
 public class Account {
     private String username;
